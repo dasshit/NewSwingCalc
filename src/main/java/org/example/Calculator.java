@@ -9,14 +9,20 @@ import org.mariuszgromada.math.mxparser.*;
 public class Calculator {
     public JFrame window = new JFrame("Calculator");
     public JTextField input = new JTextField();
+    public String inputBufer = "";
 
     public Calculator() {
 
-        window.setSize(480,405);
+        window.setSize(240,400);
+
+        Dimension minSizeDimension = new Dimension();
+        minSizeDimension.setSize(240, 400);
+        window.setMinimumSize(minSizeDimension);
+
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setBackground(Color.BLUE);
         window.setLocationRelativeTo(null);
-        window.setResizable(false);
+//        window.setResizable(false);
         window.setLayout(null);
 
         enter_area();
@@ -24,12 +30,25 @@ public class Calculator {
 //        result();
 
         window.setVisible(true);
+        window.addComponentListener(
+                new ComponentAdapter() {
+                    @Override
+                    public void componentResized(ComponentEvent e) {
+                        System.out.println(e);
+                        inputBufer = input.getText();
+                        window.getContentPane().removeAll();
+                        enter_area();
+                        buttons();
+                        input.setText(inputBufer);
+                    }
+                }
+        );
     }
 
     public void enter_area() {
         input.setFont(new Font("Arial", Font.BOLD, 25));
         input.setBackground(Color.WHITE);
-        input.setBounds(16,10, 248, 36);
+        input.setBounds(16,10, window.getWidth() - 28, 40);
         input.setHorizontalAlignment(JTextField.RIGHT);
 
         window.add(input);
@@ -55,19 +74,29 @@ public class Calculator {
 
         for(int i = 0; i < arr.length; i++) {
             for(int e = 0; e < arr[i].length; e++) {
-                JButton jbutton = new JButton();
+                final JButton jbutton = new JButton();
                 jbutton.setText(arr[i][e]);
+                jbutton.setFont(new Font("Arial", Font.BOLD, 25));
                 jbutton.setMargin(new Insets(0, 0, 0,0));
                 if(arr[i].length == 3 && e == 2) {
-                    jbutton.setBounds(16 + e * 62, 55 + i * 62, 122, 60);
+                    jbutton.setBounds(
+                            16 + e * (window.getWidth() - 28) / 4,
+                            60 + i * (window.getHeight() - 90) / 5 - 2,
+                            (window.getWidth() - 28) / 2,
+                            (window.getHeight() - 90) / 5 - 2
+                    );
                 }
                 else {
-                    jbutton.setBounds(16 + e * 62, 55 + i * 62, 60, 60);
+                    jbutton.setBounds(
+                            16 + e * (window.getWidth() - 28) / 4,
+                            60 + i * (window.getHeight() - 90) / 5 - 2,
+                            (window.getWidth() - 28) / 4,
+                            (window.getHeight() - 90) / 5 - 2
+                    );
                 }
                 jbutton.setFocusable(false);
                 JButton jButton1 = new JButton(arr[1][2]);
                 window.add(jbutton);
-                window.add(jButton1);
 
                 jbutton.addActionListener(
                         new ActionListener() {
