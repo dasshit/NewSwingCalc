@@ -13,10 +13,10 @@ public class Calculator {
 
     public Calculator() {
 
-        window.setSize(240,400);
+        window.setSize(300,400);
 
         Dimension minSizeDimension = new Dimension();
-        minSizeDimension.setSize(240, 400);
+        minSizeDimension.setSize(300, 400);
         window.setMinimumSize(minSizeDimension);
 
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -24,6 +24,7 @@ public class Calculator {
         window.setLocationRelativeTo(null);
 //        window.setResizable(false);
         window.setLayout(null);
+        window.setIconImage(new ImageIcon("img/Calculator_icon.ico").getImage());
 
         enter_area();
         buttons();
@@ -108,11 +109,20 @@ public class Calculator {
 
                                 if (buttonText.equals("=")) {
                                     Expression exp = new Expression(input.getText());
-                                    input.setText(
-                                            String.valueOf(
-                                                    exp.calculate()
-                                            )
-                                    );
+                                    double result = exp.calculate();
+                                    if (Double.isNaN(result)){
+                                        JOptionPane.showMessageDialog(
+                                                window, exp.getErrorMessage(),
+                                                "Expression Error", JOptionPane.ERROR_MESSAGE);
+                                        input.setText("");
+                                    }
+                                    else {
+                                        input.setText(
+                                                String.valueOf(
+                                                    result
+                                                )
+                                        );
+                                    }
                                 } else if (buttonText.equals("C")) {
                                     input.setText("");
                                 } else {
