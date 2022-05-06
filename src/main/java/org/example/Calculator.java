@@ -27,9 +27,7 @@ public class Calculator {
         window.setLayout(null);
         window.setIconImage(new ImageIcon("img/Calculator_icon.ico").getImage());
 
-        enter_area();
-        buttons();
-//        result();
+        createUserInterface();
 
         window.setVisible(true);
         window.addComponentListener(
@@ -37,9 +35,7 @@ public class Calculator {
                     @Override
                     public void componentResized(ComponentEvent e) {
                         inputBufer = input.getText();
-                        window.getContentPane().removeAll();
-                        enter_area();
-                        buttons();
+                        createUserInterface();
                         input.setText(inputBufer);
                     }
                 }
@@ -84,17 +80,6 @@ public class Calculator {
             }
         });
     }
-
-    public void enter_area() {
-        input.setFont(new Font("Arial", Font.BOLD, window.getHeight() * 5 / 80));
-        input.setBackground(Color.WHITE);
-        input.setBounds(16,10, window.getWidth() - 28, window.getHeight() / 10);
-        input.setHorizontalAlignment(JTextField.RIGHT);
-
-        window.add(input);
-        input.setFocusable(false);
-
-    }
     public void mathResults(){
         Expression exp = new Expression(input.getText());
         double result = exp.calculate();
@@ -127,7 +112,17 @@ public class Calculator {
             );
         }
     }
-    public void buttons(){
+    public void createUserInterface(){
+        window.getContentPane().removeAll();
+
+        input.setFont(new Font("Arial", Font.BOLD, window.getHeight() * 5 / 80));
+        input.setBackground(Color.WHITE);
+        input.setBounds(16,10, window.getWidth() - 28, window.getHeight() / 10);
+        input.setHorizontalAlignment(JTextField.RIGHT);
+
+        window.add(input);
+        input.setFocusable(false);
+
         String[][] arr = {{"1","2","3","C"}, {"4","5","6","*"}, {"7","8","9","-"}, {"0",".","+","/"}, {"(",")","="}};
 
         Font buttonFont = new Font("Arial", Font.BOLD, window.getHeight() * 5 / 80);
