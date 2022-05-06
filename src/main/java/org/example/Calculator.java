@@ -43,6 +43,36 @@ public class Calculator {
                     }
                 }
         );
+        window.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                System.out.println(e);
+                switch (e.getKeyCode()){
+                    case KeyEvent.VK_0, KeyEvent.VK_1,
+                            KeyEvent.VK_2, KeyEvent.VK_3,
+                            KeyEvent.VK_4, KeyEvent.VK_5,
+                            KeyEvent.VK_6, KeyEvent.VK_7,
+                            KeyEvent.VK_8, KeyEvent.VK_9,
+                            KeyEvent.VK_QUOTE, KeyEvent.VK_BACK_QUOTE,
+                            KeyEvent.VK_PLUS, KeyEvent.VK_MINUS,
+                            KeyEvent.VK_BACK_SLASH, KeyEvent.VK_MULTIPLY -> input.setText(
+                                    input.getText().concat(String.valueOf(e.getKeyChar()))
+                    );
+                    case KeyEvent.VK_ENTER, KeyEvent.VK_SPACE -> mathResults();
+                    case KeyEvent.VK_DELETE, KeyEvent.VK_BACK_SPACE -> input.setText("");
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
     }
 
     public void enter_area() {
@@ -52,17 +82,8 @@ public class Calculator {
         input.setHorizontalAlignment(JTextField.RIGHT);
 
         window.add(input);
-        KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-        manager.addKeyEventDispatcher(new KeyDispatcher());
+        input.setFocusable(false);
 
-    }
-    static class KeyDispatcher implements KeyEventDispatcher {
-
-        @Override
-        public boolean dispatchKeyEvent(KeyEvent e) {
-            System.out.println(e);
-            return false;
-        }
     }
     public void mathResults(){
         Expression exp = new Expression(input.getText());
