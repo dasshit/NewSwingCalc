@@ -105,10 +105,10 @@ public class Calculator {
 
     public Calculator() {
 
-        window.setSize(480,400);
+        window.setSize(540,400);
 
         Dimension minSizeDimension = new Dimension();
-        minSizeDimension.setSize(480, 400);
+        minSizeDimension.setSize(540, 400);
         window.setMinimumSize(minSizeDimension);
 
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -206,37 +206,38 @@ public class Calculator {
 //        window.getContentPane().removeAll();
 
         int windowHeight = window.getHeight();
-        int windowWidth = window.getWidth() - 210;
+        int windowWidth = window.getWidth() * 2 / 3;
 
-        Font customFont = new Font("Arial", Font.BOLD, (windowHeight) * 5 / (80));
+        Font customFont = new Font("Arial", Font.BOLD, (windowHeight) / (12));
 
         resultsLabel.setFont(new Font("Arial", Font.BOLD, 25));
         resultsLabel.setBounds(
                 windowWidth + 16,
-                10, 210 - 28,
+                10, windowWidth / 2 - 28,
                 windowHeight / 10
         );
 
         jResultsList.setBounds(
                 windowWidth + 16,
-                windowHeight / 10 + 20, 210 - 40,
+                windowHeight / 10 + 20,
+                windowWidth / 2 - 40,
                 windowHeight - (windowHeight / 10 + 60)
         );
 
         input.setFont(customFont);
         input.setBackground(Color.WHITE);
-        input.setBounds(16,10, windowWidth - 28, windowHeight / 10);
+        input.setBounds(16,10, windowWidth - 28, windowHeight / 6);
         input.setHorizontalAlignment(JTextField.RIGHT);
         input.setFocusable(false);
 
-        int buttonHeight = (windowHeight * 9 / 10 - 28) / 5 - 4;
+        int buttonHeight = (windowHeight * 5 / 6 - 28) / 5 - 4;
         int buttonWidth;
 
         int i = 0;
         for(ArrayList<JButton> buttonSubArray: keypadButtons) {
 
             int j = 0;
-            int buttonY = windowHeight / 10 + 20 + i * buttonHeight - 2;
+            int buttonY = windowHeight / 6 + 20 + i * buttonHeight - 2;
 
             for(JButton jbutton: buttonSubArray) {
 
