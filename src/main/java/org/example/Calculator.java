@@ -56,7 +56,7 @@ public class Calculator {
         manager.addKeyEventDispatcher(new KeyDispatcher());
 
     }
-    class KeyDispatcher implements KeyEventDispatcher {
+    static class KeyDispatcher implements KeyEventDispatcher {
 
         @Override
         public boolean dispatchKeyEvent(KeyEvent e) {
@@ -79,6 +79,20 @@ public class Calculator {
                     String.valueOf(
                             result
                     )
+            );
+        }
+    }
+    public void actionPerformed(ActionEvent e) {
+        String eventButtonText = ((JButton) e.getSource()).getText();
+        System.out.println(eventButtonText);
+
+        if (eventButtonText.equals("=")) {
+            mathResults();
+        } else if (eventButtonText.equals("C")) {
+            input.setText("");
+        } else {
+            input.setText(
+                    input.getText() + eventButtonText
             );
         }
     }
@@ -117,26 +131,7 @@ public class Calculator {
                 jbutton.setFocusable(false);
                 window.add(jbutton);
 
-                jbutton.addActionListener(
-                        new ActionListener() {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-
-                                String buttonText = ((JButton) e.getSource()).getText();
-                                System.out.println(buttonText);
-
-                                if (buttonText.equals("=")) {
-                                    mathResults();
-                                } else if (buttonText.equals("C")) {
-                                    input.setText("");
-                                } else {
-                                    input.setText(
-                                            input.getText() + buttonText
-                                    );
-                                }
-                            }
-                        }
-                );
+                jbutton.addActionListener(this::actionPerformed);
                 j += 1;
             }
             i += 1;
