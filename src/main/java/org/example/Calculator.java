@@ -128,33 +128,39 @@ public class Calculator {
         Font buttonFont = new Font("Arial", Font.BOLD, window.getHeight() * 5 / 80);
         Insets buttonMargin = new Insets(0, 0, 0,0);
 
+        int buttonHeight = (window.getHeight() - 90) / 5 - 2;
+        int buttonWidth = 0;
+
         int i = 0;
         for(String[] buttonSubArray: arr) {
+
             int j = 0;
+            int buttonY = window.getHeight() / 10 + 20 + i * (window.getHeight() - 90) / 5 - 2;
+
             for(String buttonText: buttonSubArray) {
-                final JButton jbutton = new JButton();
-                jbutton.setText(buttonText);
+
+                int buttonX = 16 + j * (window.getWidth() - 28) / 4;
+
+                final JButton jbutton = new JButton(buttonText);
 
                 jbutton.setFont(buttonFont);
                 jbutton.setMargin(buttonMargin);
 
                 if(!buttonText.equals("=")) {
-                    jbutton.setBounds(
-                            16 + j * (window.getWidth() - 28) / 4,
-                            window.getHeight() / 10 + 20 + i * (window.getHeight() - 90) / 5 - 2,
-                            (window.getWidth() - 28) / 4,
-                            (window.getHeight() - 90) / 5 - 2
-                    );
+                   buttonWidth =  (window.getWidth() - 28) / 4;
+                }else{
+                    buttonWidth =  (window.getWidth() - 28) / 2;
                 }
-                else {
-                    jbutton.setBounds(
-                            16 + j * (window.getWidth() - 28) / 4,
-                            window.getHeight() / 10 + 20 + i * (window.getHeight() - 90) / 5 - 2,
-                            (window.getWidth() - 28) / 2,
-                            (window.getHeight() - 90) / 5 - 2
-                    );
-                }
+
+                jbutton.setBounds(
+                        buttonX,
+                        buttonY,
+                        buttonWidth,
+                        buttonHeight
+                );
+
                 jbutton.setFocusable(false);
+
                 window.add(jbutton);
 
                 jbutton.addActionListener(this::actionPerformed);
