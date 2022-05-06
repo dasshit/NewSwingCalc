@@ -3,6 +3,7 @@ package org.example;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
 
 import org.mariuszgromada.math.mxparser.*;
 
@@ -46,7 +47,7 @@ public class Calculator {
         window.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-
+                System.out.println(e);
             }
 
             @Override
@@ -64,13 +65,22 @@ public class Calculator {
                                     input.getText().concat(String.valueOf(e.getKeyChar()))
                     );
                     case KeyEvent.VK_ENTER, KeyEvent.VK_SPACE -> mathResults();
-                    case KeyEvent.VK_DELETE, KeyEvent.VK_BACK_SPACE -> input.setText("");
+                    case KeyEvent.VK_DELETE -> input.setText("");
+                    case KeyEvent.VK_BACK_SPACE -> {
+                        try {
+                            input.setText(
+                                    input.getText(0, input.getText().length() - 1)
+                            );
+                        } catch (BadLocationException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
                 }
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
-
+                System.out.println(e);
             }
         });
     }
