@@ -20,10 +20,10 @@ public class Calculator {
 
     public Calculator() {
 
-        window.setSize(450,400);
+        window.setSize(480,400);
 
         Dimension minSizeDimension = new Dimension();
-        minSizeDimension.setSize(450, 400);
+        minSizeDimension.setSize(480, 400);
         window.setMinimumSize(minSizeDimension);
 
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -125,17 +125,17 @@ public class Calculator {
         window.getContentPane().removeAll();
 
         int windowHeight = window.getHeight();
-        int windowWidth = window.getWidth() - 180;
+        int windowWidth = window.getWidth() - 210;
 
         Font customFont = new Font("Arial", Font.BOLD, (windowHeight) * 5 / (80));
 
         JLabel resultsLabel = new JLabel("Last results:");
         resultsLabel.setFont(new Font("Arial", Font.BOLD, 25));
-        resultsLabel.setBounds(windowWidth + 16, 10, 180 - 28, windowHeight / 10);
+        resultsLabel.setBounds(windowWidth + 16, 10, 210 - 28, windowHeight / 10);
 
         window.add(resultsLabel);
 
-        jResultsList.setBounds(windowWidth + 16, windowHeight / 10 + 20, 180 - 40, windowHeight - (windowHeight / 10 + 60));
+        jResultsList.setBounds(windowWidth + 16, windowHeight / 10 + 20, 210 - 40, windowHeight - (windowHeight / 10 + 60));
         window.add(jResultsList);
 
         jResultsList.addListSelectionListener(new ListSelectionListener() {
