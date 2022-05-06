@@ -14,6 +14,15 @@ import org.w3c.dom.Text;
 public class Calculator {
     public JFrame window = new JFrame("Calculator");
     public JTextField input = new JTextField();
+    public JLabel resultsLabel = new JLabel("Last results:");
+    public String[][] buttonTextArray = {
+            {"1","2","3","C"},
+            {"4","5","6","*"},
+            {"7","8","9","-"},
+            {"0",".","+","/"},
+            {"(",")","="}
+    };
+    public Insets buttonMargin = new Insets(0, 0, 0,0);
     public ArrayList<String> resultsList = new ArrayList<String>();
     public JList jResultsList = new JList(resultsList.toArray());
     public String inputBufer = "";
@@ -177,7 +186,6 @@ public class Calculator {
 
         Font customFont = new Font("Arial", Font.BOLD, (windowHeight) * 5 / (80));
 
-        JLabel resultsLabel = new JLabel("Last results:");
         resultsLabel.setFont(new Font("Arial", Font.BOLD, 25));
         resultsLabel.setBounds(
                 windowWidth + 16,
@@ -205,23 +213,14 @@ public class Calculator {
         window.add(input);
         input.setFocusable(false);
 
-        String[][] arr = {
-                {"1","2","3","C"},
-                {"4","5","6","*"},
-                {"7","8","9","-"},
-                {"0",".","+","/"},
-                {"(",")","="}
-        };
-        Insets buttonMargin = new Insets(0, 0, 0,0);
-
-        int buttonHeight = (windowHeight * 9 / 10 - 28) / 5 - 10;
+        int buttonHeight = (windowHeight * 9 / 10 - 28) / 5 - 4;
         int buttonWidth;
 
         int i = 0;
-        for(String[] buttonSubArray: arr) {
+        for(String[] buttonSubArray: buttonTextArray) {
 
             int j = 0;
-            int buttonY = windowHeight / 10 + 20 + i * (windowHeight - 90) / 5 - 2;
+            int buttonY = windowHeight / 10 + 20 + i * buttonHeight - 2;
 
             for(String buttonText: buttonSubArray) {
 
