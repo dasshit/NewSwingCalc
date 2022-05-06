@@ -5,11 +5,9 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.text.BadLocationException;
 
 import org.mariuszgromada.math.mxparser.*;
-import org.w3c.dom.Text;
 
 public class Calculator {
     public JFrame window = new JFrame("Calculator");
@@ -22,6 +20,7 @@ public class Calculator {
             {"0",".","+","/"},
             {"(",")","="}
     };
+    public ArrayList<ArrayList<JButton>> keypadButtons = new ArrayList<ArrayList<JButton>>();
     public Insets buttonMargin = new Insets(0, 0, 0,0);
     public ArrayList<String> resultsList = new ArrayList<String>();
     public JList jResultsList = new JList(resultsList.toArray());
@@ -119,6 +118,31 @@ public class Calculator {
         window.setLayout(null);
         window.setIconImage(new ImageIcon("img/Calculator_icon.ico").getImage());
 
+        window.add(input);
+
+        window.add(resultsLabel);
+
+        window.add(jResultsList);
+        jResultsList.addListSelectionListener(this::valueChanged);
+        jResultsList.addKeyListener(keyListener);
+
+        for(String[] buttonSubArray: buttonTextArray) {
+
+            ArrayList<JButton> buttonsRow = new ArrayList<JButton>();
+
+            for (String buttonText : buttonSubArray) {
+                final JButton newButton = new JButton(buttonText);
+                newButton.addActionListener(this::actionPerformed);
+                window.add(newButton);
+                buttonsRow.add(
+                        newButton
+                );
+            }
+            keypadButtons.add(
+                    buttonsRow
+            );
+        }
+
         createUserInterface();
 
         window.setVisible(true);
@@ -179,7 +203,7 @@ public class Calculator {
         window.requestFocus();
     }
     public void createUserInterface(){
-        window.getContentPane().removeAll();
+//        window.getContentPane().removeAll();
 
         int windowHeight = window.getHeight();
         int windowWidth = window.getWidth() - 210;
@@ -193,45 +217,35 @@ public class Calculator {
                 windowHeight / 10
         );
 
-        window.add(resultsLabel);
-
         jResultsList.setBounds(
                 windowWidth + 16,
                 windowHeight / 10 + 20, 210 - 40,
                 windowHeight - (windowHeight / 10 + 60)
         );
-        window.add(jResultsList);
-
-        jResultsList.addListSelectionListener(this::valueChanged);
-        jResultsList.addKeyListener(keyListener);
 
         input.setFont(customFont);
         input.setBackground(Color.WHITE);
         input.setBounds(16,10, windowWidth - 28, windowHeight / 10);
         input.setHorizontalAlignment(JTextField.RIGHT);
-
-        window.add(input);
         input.setFocusable(false);
 
         int buttonHeight = (windowHeight * 9 / 10 - 28) / 5 - 4;
         int buttonWidth;
 
         int i = 0;
-        for(String[] buttonSubArray: buttonTextArray) {
+        for(ArrayList<JButton> buttonSubArray: keypadButtons) {
 
             int j = 0;
             int buttonY = windowHeight / 10 + 20 + i * buttonHeight - 2;
 
-            for(String buttonText: buttonSubArray) {
+            for(JButton jbutton: buttonSubArray) {
 
                 int buttonX = 16 + j * (windowWidth - 28) / 4;
-
-                final JButton jbutton = new JButton(buttonText);
 
                 jbutton.setFont(customFont);
                 jbutton.setMargin(buttonMargin);
 
-                if(!buttonText.equals("=")) {
+                if(!jbutton.getText().equals("=")) {
                    buttonWidth =  (windowWidth - 28) / 4;
                 }else{
                     buttonWidth =  (windowWidth - 28) / 2;
@@ -245,10 +259,6 @@ public class Calculator {
                 );
 
                 jbutton.setFocusable(false);
-
-                window.add(jbutton);
-
-                jbutton.addActionListener(this::actionPerformed);
                 j += 1;
             }
             i += 1;
