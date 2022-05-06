@@ -32,12 +32,20 @@ public class Calculator {
                         KeyEvent.VK_4, KeyEvent.VK_5,
                         KeyEvent.VK_6, KeyEvent.VK_7,
                         KeyEvent.VK_8, KeyEvent.VK_9,
-                        KeyEvent.VK_QUOTE, KeyEvent.VK_BACK_QUOTE,
-                        KeyEvent.VK_PLUS, KeyEvent.VK_MINUS,
+                        KeyEvent.VK_QUOTE, KeyEvent.VK_BACK_QUOTE, KeyEvent.VK_MINUS,
                         KeyEvent.VK_SLASH, KeyEvent.VK_MULTIPLY -> input.setText(
                         input.getText().concat(String.valueOf(e.getKeyChar()))
                 );
-                case KeyEvent.VK_ENTER, KeyEvent.VK_SPACE, KeyEvent.VK_EQUALS -> mathResults();
+                case KeyEvent.VK_ENTER, KeyEvent.VK_SPACE -> mathResults();
+                case KeyEvent.VK_EQUALS -> {
+                    if (e.isShiftDown()) {
+                        input.setText(
+                                input.getText().concat(String.valueOf(e.getKeyChar()))
+                        );
+                    } else {
+                        mathResults();
+                    }
+                }
                 case KeyEvent.VK_DELETE -> input.setText("");
                 case KeyEvent.VK_BACK_SPACE -> {
                     try {
