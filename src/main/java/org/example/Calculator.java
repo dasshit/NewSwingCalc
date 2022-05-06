@@ -17,6 +17,71 @@ public class Calculator {
     public ArrayList<String> resultsList = new ArrayList<String>();
     public JList jResultsList = new JList(resultsList.toArray());
     public String inputBufer = "";
+    public KeyListener keyListener = new KeyListener() {
+        @Override
+        public void keyTyped(KeyEvent e) {
+            System.out.println(e);
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            System.out.println(e);
+            switch (e.getKeyCode()){
+                case KeyEvent.VK_0, KeyEvent.VK_1,
+                        KeyEvent.VK_2, KeyEvent.VK_3,
+                        KeyEvent.VK_4, KeyEvent.VK_5,
+                        KeyEvent.VK_6, KeyEvent.VK_7,
+                        KeyEvent.VK_8, KeyEvent.VK_9,
+                        KeyEvent.VK_QUOTE, KeyEvent.VK_BACK_QUOTE,
+                        KeyEvent.VK_PLUS, KeyEvent.VK_MINUS,
+                        KeyEvent.VK_SLASH, KeyEvent.VK_MULTIPLY -> input.setText(
+                        input.getText().concat(String.valueOf(e.getKeyChar()))
+                );
+                case KeyEvent.VK_ENTER, KeyEvent.VK_SPACE -> mathResults();
+                case KeyEvent.VK_DELETE -> input.setText("");
+                case KeyEvent.VK_BACK_SPACE -> {
+                    try {
+                        input.setText(
+                                input.getText(0, input.getText().length() - 1)
+                        );
+                    } catch (BadLocationException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+                case KeyEvent.VK_UP, KeyEvent.VK_KP_UP, KeyEvent.VK_PAGE_UP -> {
+                    if (jResultsList.isSelectionEmpty()) {
+                        jResultsList.setSelectedIndex(0);
+                    } else {
+                        jResultsList.setSelectedIndex(
+                                jResultsList.getSelectedIndex() - 1
+                        );
+                    }
+                }
+                case KeyEvent.VK_DOWN, KeyEvent.VK_KP_DOWN, KeyEvent.VK_PAGE_DOWN -> {
+                    if (jResultsList.isSelectionEmpty()) {
+                        jResultsList.setSelectedIndex(
+                                jResultsList.getLastVisibleIndex()
+                        );
+                    } else {
+                        jResultsList.setSelectedIndex(
+                                jResultsList.getSelectedIndex() + 1
+                        );
+                    }
+                }
+                case KeyEvent.VK_ESCAPE -> {
+                    if (!jResultsList.isSelectionEmpty()) {
+                        jResultsList.clearSelection();
+                    }
+                    input.setText("");
+                }
+            }
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            System.out.println(e);
+        }
+    };
 
     public Calculator() {
 
@@ -47,45 +112,7 @@ public class Calculator {
                     }
                 }
         );
-        window.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                System.out.println(e);
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                System.out.println(e);
-                switch (e.getKeyCode()){
-                    case KeyEvent.VK_0, KeyEvent.VK_1,
-                            KeyEvent.VK_2, KeyEvent.VK_3,
-                            KeyEvent.VK_4, KeyEvent.VK_5,
-                            KeyEvent.VK_6, KeyEvent.VK_7,
-                            KeyEvent.VK_8, KeyEvent.VK_9,
-                            KeyEvent.VK_QUOTE, KeyEvent.VK_BACK_QUOTE,
-                            KeyEvent.VK_PLUS, KeyEvent.VK_MINUS,
-                            KeyEvent.VK_BACK_SLASH, KeyEvent.VK_MULTIPLY -> input.setText(
-                                    input.getText().concat(String.valueOf(e.getKeyChar()))
-                    );
-                    case KeyEvent.VK_ENTER, KeyEvent.VK_SPACE -> mathResults();
-                    case KeyEvent.VK_DELETE -> input.setText("");
-                    case KeyEvent.VK_BACK_SPACE -> {
-                        try {
-                            input.setText(
-                                    input.getText(0, input.getText().length() - 1)
-                            );
-                        } catch (BadLocationException ex) {
-                            throw new RuntimeException(ex);
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-                System.out.println(e);
-            }
-        });
+        window.addKeyListener(keyListener);
     }
     public void mathResults(){
         Expression exp = new Expression(input.getText());
@@ -121,6 +148,15 @@ public class Calculator {
             );
         }
     }
+    public void valueChanged(ListSelectionEvent e) {
+        System.out.println(e);
+        System.out.println(jResultsList.getSelectedValue());
+        String selectedValue = (String) jResultsList.getSelectedValue();
+        if (selectedValue != null && !selectedValue.isEmpty()){
+            input.setText(selectedValue);
+        }
+        window.requestFocus();
+    }
     public void createUserInterface(){
         window.getContentPane().removeAll();
 
@@ -131,24 +167,23 @@ public class Calculator {
 
         JLabel resultsLabel = new JLabel("Last results:");
         resultsLabel.setFont(new Font("Arial", Font.BOLD, 25));
-        resultsLabel.setBounds(windowWidth + 16, 10, 210 - 28, windowHeight / 10);
+        resultsLabel.setBounds(
+                windowWidth + 16,
+                10, 210 - 28,
+                windowHeight / 10
+        );
 
         window.add(resultsLabel);
 
-        jResultsList.setBounds(windowWidth + 16, windowHeight / 10 + 20, 210 - 40, windowHeight - (windowHeight / 10 + 60));
+        jResultsList.setBounds(
+                windowWidth + 16,
+                windowHeight / 10 + 20, 210 - 40,
+                windowHeight - (windowHeight / 10 + 60)
+        );
         window.add(jResultsList);
 
-        jResultsList.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                System.out.println(e);
-                System.out.println(jResultsList.getSelectedValue());
-                String selectedValue = (String) jResultsList.getSelectedValue();
-                if (selectedValue != null && !selectedValue.isEmpty()){
-                    input.setText(selectedValue);
-                }
-            }
-        });
+        jResultsList.addListSelectionListener(this::valueChanged);
+        jResultsList.addKeyListener(keyListener);
 
         input.setFont(customFont);
         input.setBackground(Color.WHITE);
@@ -207,4 +242,5 @@ public class Calculator {
             }
             i += 1;
         }
+        window.setFocusable(true);
     }}
