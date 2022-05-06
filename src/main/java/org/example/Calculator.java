@@ -206,21 +206,23 @@ public class Calculator {
 //        window.getContentPane().removeAll();
 
         int windowHeight = window.getHeight();
-        int windowWidth = window.getWidth() * 2 / 3;
+        int windowWidth = window.getWidth() * 3 / 5;
 
         Font customFont = new Font("Arial", Font.BOLD, (windowHeight) / (12));
 
         resultsLabel.setFont(new Font("Arial", Font.BOLD, 25));
         resultsLabel.setBounds(
                 windowWidth + 16,
-                10, windowWidth / 2 - 28,
+                10,
+                windowWidth / 2 - 28,
                 windowHeight / 10
         );
 
+        jResultsList.setFont(new Font("Arial", Font.BOLD, 20));
         jResultsList.setBounds(
                 windowWidth + 16,
                 windowHeight / 10 + 20,
-                windowWidth / 2 - 40,
+                windowWidth * 2 / 3 - 40,
                 windowHeight - (windowHeight / 10 + 60)
         );
 
