@@ -33,8 +33,12 @@ public class Calculator {
                         KeyEvent.VK_6, KeyEvent.VK_7,
                         KeyEvent.VK_8, KeyEvent.VK_9,
                         KeyEvent.VK_QUOTE, KeyEvent.VK_BACK_QUOTE, KeyEvent.VK_MINUS,
+                        KeyEvent.VK_PERIOD,
                         KeyEvent.VK_SLASH, KeyEvent.VK_MULTIPLY -> input.setText(
                         input.getText().concat(String.valueOf(e.getKeyChar()))
+                );
+                case KeyEvent.VK_COMMA -> input.setText(
+                        input.getText().concat(".")
                 );
                 case KeyEvent.VK_ENTER, KeyEvent.VK_SPACE -> mathResults();
                 case KeyEvent.VK_EQUALS -> {
