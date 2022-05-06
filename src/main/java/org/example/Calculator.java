@@ -86,9 +86,9 @@ public class Calculator {
     }
 
     public void enter_area() {
-        input.setFont(new Font("Arial", Font.BOLD, 25));
+        input.setFont(new Font("Arial", Font.BOLD, window.getHeight() * 5 / 80));
         input.setBackground(Color.WHITE);
-        input.setBounds(16,10, window.getWidth() - 28, 40);
+        input.setBounds(16,10, window.getWidth() - 28, window.getHeight() / 10);
         input.setHorizontalAlignment(JTextField.RIGHT);
 
         window.add(input);
@@ -130,7 +130,7 @@ public class Calculator {
     public void buttons(){
         String[][] arr = {{"1","2","3","C"}, {"4","5","6","*"}, {"7","8","9","-"}, {"0",".","+","/"}, {"(",")","="}};
 
-        Font buttonFont = new Font("Arial", Font.BOLD, 25);
+        Font buttonFont = new Font("Arial", Font.BOLD, window.getHeight() * 5 / 80);
         Insets buttonMargin = new Insets(0, 0, 0,0);
 
         int i = 0;
@@ -146,7 +146,7 @@ public class Calculator {
                 if(!buttonText.equals("=")) {
                     jbutton.setBounds(
                             16 + j * (window.getWidth() - 28) / 4,
-                            60 + i * (window.getHeight() - 90) / 5 - 2,
+                            window.getHeight() / 10 + 20 + i * (window.getHeight() - 90) / 5 - 2,
                             (window.getWidth() - 28) / 4,
                             (window.getHeight() - 90) / 5 - 2
                     );
@@ -154,7 +154,7 @@ public class Calculator {
                 else {
                     jbutton.setBounds(
                             16 + j * (window.getWidth() - 28) / 4,
-                            60 + i * (window.getHeight() - 90) / 5 - 2,
+                            window.getHeight() / 10 + 20 + i * (window.getHeight() - 90) / 5 - 2,
                             (window.getWidth() - 28) / 2,
                             (window.getHeight() - 90) / 5 - 2
                     );
