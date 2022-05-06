@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="986ecb63-69f6-423a-b470-74a77aa81365" name="Changes" comment="Fonts size after resize support">
+    <list default="true" id="986ecb63-69f6-423a-b470-74a77aa81365" name="Changes" comment="createUserInterface refactoring">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Calculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Calculator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -138,7 +139,21 @@
       <option name="project" value="LOCAL" />
       <updated>1651799656889</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="createUserInterface refactoring">
+      <created>1651800123618</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1651800123618</updated>
+    </task>
+    <task id="LOCAL-00011" summary="createUserInterface refactoring">
+      <created>1651800269618</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1651800269618</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -158,6 +173,7 @@
     <MESSAGE value="Added expression error dialog" />
     <MESSAGE value="Added key pressed support" />
     <MESSAGE value="Fonts size after resize support" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fonts size after resize support" />
+    <MESSAGE value="createUserInterface refactoring" />
+    <option name="LAST_COMMIT_MESSAGE" value="createUserInterface refactoring" />
   </component>
 </project>

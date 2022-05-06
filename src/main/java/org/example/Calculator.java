@@ -34,6 +34,7 @@ public class Calculator {
                 new ComponentAdapter() {
                     @Override
                     public void componentResized(ComponentEvent e) {
+                        System.out.println(e);
                         inputBufer = input.getText();
                         createUserInterface();
                         input.setText(inputBufer);
@@ -115,9 +116,14 @@ public class Calculator {
     public void createUserInterface(){
         window.getContentPane().removeAll();
 
-        input.setFont(new Font("Arial", Font.BOLD, window.getHeight() * 5 / 80));
+        int windowHeight = window.getHeight();
+        int windowWidth = window.getWidth();
+
+        Font customFont = new Font("Arial", Font.BOLD, (windowHeight) * 5 / (80));
+
+        input.setFont(customFont);
         input.setBackground(Color.WHITE);
-        input.setBounds(16,10, window.getWidth() - 28, window.getHeight() / 10);
+        input.setBounds(16,10, windowWidth - 28, windowHeight / 10);
         input.setHorizontalAlignment(JTextField.RIGHT);
 
         window.add(input);
@@ -130,15 +136,11 @@ public class Calculator {
                 {"0",".","+","/"},
                 {"(",")","="}
         };
-
-        Font buttonFont = new Font("Arial", Font.BOLD, window.getHeight() * 5 / 80);
         Insets buttonMargin = new Insets(0, 0, 0,0);
 
-        int windowHeight = window.getHeight();
-        int windowWidth = window.getWidth();
-
-        int buttonHeight = (windowHeight - 90) / 5 - 2;
-        int buttonWidth = 0;
+        int buttonHeight = (windowHeight * 9 / 10 - 28) / 5 - 10;
+        System.out.println(buttonHeight);
+        int buttonWidth;
 
         int i = 0;
         for(String[] buttonSubArray: arr) {
@@ -152,7 +154,7 @@ public class Calculator {
 
                 final JButton jbutton = new JButton(buttonText);
 
-                jbutton.setFont(buttonFont);
+                jbutton.setFont(customFont);
                 jbutton.setMargin(buttonMargin);
 
                 if(!buttonText.equals("=")) {
