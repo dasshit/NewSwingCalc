@@ -37,7 +37,7 @@ public class Calculator {
                         KeyEvent.VK_SLASH, KeyEvent.VK_MULTIPLY -> input.setText(
                         input.getText().concat(String.valueOf(e.getKeyChar()))
                 );
-                case KeyEvent.VK_ENTER, KeyEvent.VK_SPACE -> mathResults();
+                case KeyEvent.VK_ENTER, KeyEvent.VK_SPACE, KeyEvent.VK_EQUALS -> mathResults();
                 case KeyEvent.VK_DELETE -> input.setText("");
                 case KeyEvent.VK_BACK_SPACE -> {
                     try {
