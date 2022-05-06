@@ -60,13 +60,26 @@ public class Calculator {
 
         @Override
         public boolean dispatchKeyEvent(KeyEvent e) {
-            if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-//                result();
-            }
-            if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                input.setText("");
-            }
+            System.out.println(e);
             return false;
+        }
+    }
+    public void mathResults(){
+        Expression exp = new Expression(input.getText());
+        double result = exp.calculate();
+        if (Double.isNaN(result)){
+            System.err.println(exp.getErrorMessage());
+            JOptionPane.showMessageDialog(
+                    window, exp.getErrorMessage(),
+                    "Expression Error", JOptionPane.ERROR_MESSAGE);
+            input.setText("");
+        }
+        else {
+            input.setText(
+                    String.valueOf(
+                            result
+                    )
+            );
         }
     }
     public void buttons(){
@@ -113,21 +126,7 @@ public class Calculator {
                                 System.out.println(buttonText);
 
                                 if (buttonText.equals("=")) {
-                                    Expression exp = new Expression(input.getText());
-                                    double result = exp.calculate();
-                                    if (Double.isNaN(result)){
-                                        JOptionPane.showMessageDialog(
-                                                window, exp.getErrorMessage(),
-                                                "Expression Error", JOptionPane.ERROR_MESSAGE);
-                                        input.setText("");
-                                    }
-                                    else {
-                                        input.setText(
-                                                String.valueOf(
-                                                    result
-                                                )
-                                        );
-                                    }
+                                    mathResults();
                                 } else if (buttonText.equals("C")) {
                                     input.setText("");
                                 } else {
