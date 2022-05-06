@@ -152,7 +152,7 @@ public class Calculator {
             input.setText("");
         } else {
             input.setText(
-                    input.getText() + eventButtonText
+                    input.getText().concat(eventButtonText)
             );
         }
     }
