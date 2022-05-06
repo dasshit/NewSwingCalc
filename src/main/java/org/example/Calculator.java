@@ -35,7 +35,6 @@ public class Calculator {
                 new ComponentAdapter() {
                     @Override
                     public void componentResized(ComponentEvent e) {
-                        System.out.println(e);
                         inputBufer = input.getText();
                         window.getContentPane().removeAll();
                         enter_area();
@@ -73,30 +72,36 @@ public class Calculator {
     public void buttons(){
         String[][] arr = {{"1","2","3","C"}, {"4","5","6","*"}, {"7","8","9","-"}, {"0",".","+","/"}, {"(",")","="}};
 
-        for(int i = 0; i < arr.length; i++) {
-            for(int e = 0; e < arr[i].length; e++) {
+        Font buttonFont = new Font("Arial", Font.BOLD, 25);
+        Insets buttonMargin = new Insets(0, 0, 0,0);
+
+        int i = 0;
+        for(String[] buttonSubArray: arr) {
+            int j = 0;
+            for(String buttonText: buttonSubArray) {
                 final JButton jbutton = new JButton();
-                jbutton.setText(arr[i][e]);
-                jbutton.setFont(new Font("Arial", Font.BOLD, 25));
-                jbutton.setMargin(new Insets(0, 0, 0,0));
-                if(arr[i].length == 3 && e == 2) {
+                jbutton.setText(buttonText);
+
+                jbutton.setFont(buttonFont);
+                jbutton.setMargin(buttonMargin);
+
+                if(!buttonText.equals("=")) {
                     jbutton.setBounds(
-                            16 + e * (window.getWidth() - 28) / 4,
-                            60 + i * (window.getHeight() - 90) / 5 - 2,
-                            (window.getWidth() - 28) / 2,
-                            (window.getHeight() - 90) / 5 - 2
-                    );
-                }
-                else {
-                    jbutton.setBounds(
-                            16 + e * (window.getWidth() - 28) / 4,
+                            16 + j * (window.getWidth() - 28) / 4,
                             60 + i * (window.getHeight() - 90) / 5 - 2,
                             (window.getWidth() - 28) / 4,
                             (window.getHeight() - 90) / 5 - 2
                     );
                 }
+                else {
+                    jbutton.setBounds(
+                            16 + j * (window.getWidth() - 28) / 4,
+                            60 + i * (window.getHeight() - 90) / 5 - 2,
+                            (window.getWidth() - 28) / 2,
+                            (window.getHeight() - 90) / 5 - 2
+                    );
+                }
                 jbutton.setFocusable(false);
-                JButton jButton1 = new JButton(arr[1][2]);
                 window.add(jbutton);
 
                 jbutton.addActionListener(
@@ -133,6 +138,8 @@ public class Calculator {
                             }
                         }
                 );
+                j += 1;
             }
+            i += 1;
         }
     }}
