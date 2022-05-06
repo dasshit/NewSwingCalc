@@ -123,23 +123,32 @@ public class Calculator {
         window.add(input);
         input.setFocusable(false);
 
-        String[][] arr = {{"1","2","3","C"}, {"4","5","6","*"}, {"7","8","9","-"}, {"0",".","+","/"}, {"(",")","="}};
+        String[][] arr = {
+                {"1","2","3","C"},
+                {"4","5","6","*"},
+                {"7","8","9","-"},
+                {"0",".","+","/"},
+                {"(",")","="}
+        };
 
         Font buttonFont = new Font("Arial", Font.BOLD, window.getHeight() * 5 / 80);
         Insets buttonMargin = new Insets(0, 0, 0,0);
 
-        int buttonHeight = (window.getHeight() - 90) / 5 - 2;
+        int windowHeight = window.getHeight();
+        int windowWidth = window.getWidth();
+
+        int buttonHeight = (windowHeight - 90) / 5 - 2;
         int buttonWidth = 0;
 
         int i = 0;
         for(String[] buttonSubArray: arr) {
 
             int j = 0;
-            int buttonY = window.getHeight() / 10 + 20 + i * (window.getHeight() - 90) / 5 - 2;
+            int buttonY = windowHeight / 10 + 20 + i * (windowHeight - 90) / 5 - 2;
 
             for(String buttonText: buttonSubArray) {
 
-                int buttonX = 16 + j * (window.getWidth() - 28) / 4;
+                int buttonX = 16 + j * (windowWidth - 28) / 4;
 
                 final JButton jbutton = new JButton(buttonText);
 
@@ -147,9 +156,9 @@ public class Calculator {
                 jbutton.setMargin(buttonMargin);
 
                 if(!buttonText.equals("=")) {
-                   buttonWidth =  (window.getWidth() - 28) / 4;
+                   buttonWidth =  (windowWidth - 28) / 4;
                 }else{
-                    buttonWidth =  (window.getWidth() - 28) / 2;
+                    buttonWidth =  (windowWidth - 28) / 2;
                 }
 
                 jbutton.setBounds(
