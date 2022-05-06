@@ -2,22 +2,28 @@ package org.example;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.text.BadLocationException;
 
 import org.mariuszgromada.math.mxparser.*;
+import org.w3c.dom.Text;
 
 public class Calculator {
     public JFrame window = new JFrame("Calculator");
     public JTextField input = new JTextField();
+    public ArrayList<String> resultsList = new ArrayList<String>();
+    public JList jResultsList = new JList(resultsList.toArray());
     public String inputBufer = "";
 
     public Calculator() {
 
-        window.setSize(300,400);
+        window.setSize(450,400);
 
         Dimension minSizeDimension = new Dimension();
-        minSizeDimension.setSize(300, 400);
+        minSizeDimension.setSize(450, 400);
         window.setMinimumSize(minSizeDimension);
 
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -97,6 +103,8 @@ public class Calculator {
                             result
                     )
             );
+            resultsList.add(String.valueOf(result));
+            jResultsList.setListData(resultsList.toArray());
         }
     }
     public void actionPerformed(ActionEvent e) {
@@ -117,9 +125,30 @@ public class Calculator {
         window.getContentPane().removeAll();
 
         int windowHeight = window.getHeight();
-        int windowWidth = window.getWidth();
+        int windowWidth = window.getWidth() - 180;
 
         Font customFont = new Font("Arial", Font.BOLD, (windowHeight) * 5 / (80));
+
+        JLabel resultsLabel = new JLabel("Last results:");
+        resultsLabel.setFont(new Font("Arial", Font.BOLD, 25));
+        resultsLabel.setBounds(windowWidth + 16, 10, 180 - 28, windowHeight / 10);
+
+        window.add(resultsLabel);
+
+        jResultsList.setBounds(windowWidth + 16, windowHeight / 10 + 20, 180 - 40, windowHeight - (windowHeight / 10 + 60));
+        window.add(jResultsList);
+
+        jResultsList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                System.out.println(e);
+                System.out.println(jResultsList.getSelectedValue());
+                String selectedValue = (String) jResultsList.getSelectedValue();
+                if (selectedValue != null && !selectedValue.isEmpty()){
+                    input.setText(selectedValue);
+                }
+            }
+        });
 
         input.setFont(customFont);
         input.setBackground(Color.WHITE);
@@ -139,7 +168,6 @@ public class Calculator {
         Insets buttonMargin = new Insets(0, 0, 0,0);
 
         int buttonHeight = (windowHeight * 9 / 10 - 28) / 5 - 10;
-        System.out.println(buttonHeight);
         int buttonWidth;
 
         int i = 0;
